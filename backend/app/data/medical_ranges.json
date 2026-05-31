@@ -1,0 +1,212 @@
+{
+  "Hemoglobin": {
+    "unit": "g/dL",
+    "direction": "two_sided",
+    "ranges": {
+      "critical_low": { "max": 7.0 },
+      "low": { "min": 7.0, "max": 11.9 },
+      "borderline_low": { "min": 12.0, "max": 12.9 },
+      "normal": { "min": 13.0, "max": 17.5 },
+      "borderline_high": { "min": 17.6, "max": 18.5 },
+      "high": { "min": 18.6, "max": 20.0 },
+      "critical_high": { "min": 20.0 }
+    },
+    "recommendations": {
+      "normal": "Hemoglobin is within the expected range. Continue routine monitoring.",
+      "borderline": "Hemoglobin is near the reference boundary. Review hydration, nutrition, and repeat testing if advised by a clinician.",
+      "high": "Hemoglobin is outside the expected range. Discuss this result with a qualified clinician.",
+      "critical": "Hemoglobin is in a critical range. Seek prompt medical review."
+    }
+  },
+  "RBC": {
+    "unit": "million/uL",
+    "direction": "two_sided",
+    "ranges": {
+      "critical_low": { "max": 2.5 },
+      "low": { "min": 2.5, "max": 3.9 },
+      "borderline_low": { "min": 4.0, "max": 4.19 },
+      "normal": { "min": 4.2, "max": 5.9 },
+      "borderline_high": { "min": 5.91, "max": 6.2 },
+      "high": { "min": 6.21, "max": 7.0 },
+      "critical_high": { "min": 7.0 }
+    },
+    "recommendations": {
+      "normal": "RBC count is within the expected range. Continue routine monitoring.",
+      "borderline": "RBC count is near the reference boundary. Correlate with hemoglobin and clinical context.",
+      "high": "RBC count is outside the expected range. Discuss this result with a qualified clinician.",
+      "critical": "RBC count is in a critical range. Seek prompt medical review."
+    }
+  },
+  "WBC": {
+    "unit": "cells/uL",
+    "direction": "two_sided",
+    "ranges": {
+      "critical_low": { "max": 2000 },
+      "low": { "min": 2000, "max": 3499 },
+      "borderline_low": { "min": 3500, "max": 3999 },
+      "normal": { "min": 4000, "max": 11000 },
+      "borderline_high": { "min": 11001, "max": 13000 },
+      "high": { "min": 13001, "max": 30000 },
+      "critical_high": { "min": 30000 }
+    },
+    "recommendations": {
+      "normal": "WBC count is within the expected range. Continue routine monitoring.",
+      "borderline": "WBC count is near the reference boundary. Consider repeat testing if symptoms or clinical concerns exist.",
+      "high": "WBC count is outside the expected range. Discuss this result with a qualified clinician.",
+      "critical": "WBC count is in a critical range. Seek prompt medical review."
+    }
+  },
+  "Platelets": {
+    "unit": "10^3/uL",
+    "direction": "two_sided",
+    "ranges": {
+      "critical_low": { "max": 50 },
+      "low": { "min": 50, "max": 129 },
+      "borderline_low": { "min": 130, "max": 149 },
+      "normal": { "min": 150, "max": 450 },
+      "borderline_high": { "min": 451, "max": 500 },
+      "high": { "min": 501, "max": 1000 },
+      "critical_high": { "min": 1000 }
+    },
+    "recommendations": {
+      "normal": "Platelet count is within the expected range. Continue routine monitoring.",
+      "borderline": "Platelet count is near the reference boundary. Review trends and repeat testing if advised.",
+      "high": "Platelet count is outside the expected range. Discuss this result with a qualified clinician.",
+      "critical": "Platelet count is in a critical range. Seek prompt medical review."
+    }
+  },
+  "Cholesterol": {
+    "unit": "mg/dL",
+    "direction": "high_only",
+    "ranges": {
+      "normal": { "max": 199 },
+      "borderline_high": { "min": 200, "max": 239 },
+      "high": { "min": 240, "max": 299 },
+      "critical_high": { "min": 300 }
+    },
+    "recommendations": {
+      "normal": "Total cholesterol is within the expected range. Continue heart-healthy habits.",
+      "borderline": "Total cholesterol is borderline high. Review diet, exercise, and cardiovascular risk factors with a clinician.",
+      "high": "Total cholesterol is high. Discuss risk reduction and follow-up testing with a qualified clinician.",
+      "critical": "Total cholesterol is very high. Seek timely medical review."
+    }
+  },
+  "HDL": {
+    "unit": "mg/dL",
+    "direction": "low_only",
+    "ranges": {
+      "critical_low": { "max": 25 },
+      "low": { "min": 25, "max": 39 },
+      "borderline_low": { "min": 40, "max": 49 },
+      "normal": { "min": 50 }
+    },
+    "recommendations": {
+      "normal": "HDL is within the expected protective range. Continue heart-healthy habits.",
+      "borderline": "HDL is near the lower boundary. Review lifestyle factors with a clinician if risk factors are present.",
+      "high": "HDL is below the expected range. Discuss cardiovascular risk context with a qualified clinician.",
+      "critical": "HDL is very low. Seek timely medical review."
+    }
+  },
+  "LDL": {
+    "unit": "mg/dL",
+    "direction": "high_only",
+    "ranges": {
+      "normal": { "max": 99 },
+      "borderline_high": { "min": 100, "max": 129 },
+      "high": { "min": 130, "max": 189 },
+      "critical_high": { "min": 190 }
+    },
+    "recommendations": {
+      "normal": "LDL is within the expected range. Continue heart-healthy habits.",
+      "borderline": "LDL is borderline high. Review diet, activity, and overall risk factors with a clinician.",
+      "high": "LDL is high. Discuss cardiovascular risk reduction with a qualified clinician.",
+      "critical": "LDL is very high. Seek timely medical review."
+    }
+  },
+  "Triglycerides": {
+    "unit": "mg/dL",
+    "direction": "high_only",
+    "ranges": {
+      "normal": { "max": 149 },
+      "borderline_high": { "min": 150, "max": 199 },
+      "high": { "min": 200, "max": 499 },
+      "critical_high": { "min": 500 }
+    },
+    "recommendations": {
+      "normal": "Triglycerides are within the expected range. Continue heart-healthy habits.",
+      "borderline": "Triglycerides are borderline high. Review diet, alcohol intake, activity, and repeat testing if advised.",
+      "high": "Triglycerides are high. Discuss follow-up and risk reduction with a qualified clinician.",
+      "critical": "Triglycerides are very high. Seek timely medical review."
+    }
+  },
+  "Glucose": {
+    "unit": "mg/dL",
+    "direction": "two_sided",
+    "ranges": {
+      "critical_low": { "max": 54 },
+      "low": { "min": 54, "max": 69 },
+      "normal": { "min": 70, "max": 99 },
+      "borderline_high": { "min": 100, "max": 125 },
+      "high": { "min": 126, "max": 250 },
+      "critical_high": { "min": 250 }
+    },
+    "recommendations": {
+      "normal": "Glucose is within the expected fasting range. Continue routine monitoring.",
+      "borderline": "Glucose is borderline high. Review fasting status, diet, activity, and follow-up timing with a clinician.",
+      "high": "Glucose is outside the expected range. Discuss this result with a qualified clinician.",
+      "critical": "Glucose is in a critical range. Seek prompt medical review."
+    }
+  },
+  "HbA1c": {
+    "unit": "%",
+    "direction": "high_only",
+    "ranges": {
+      "normal": { "max": 5.6 },
+      "borderline_high": { "min": 5.7, "max": 6.4 },
+      "high": { "min": 6.5, "max": 9.0 },
+      "critical_high": { "min": 9.0 }
+    },
+    "recommendations": {
+      "normal": "HbA1c is within the expected range. Continue routine monitoring.",
+      "borderline": "HbA1c is borderline high. Discuss lifestyle and follow-up testing with a clinician.",
+      "high": "HbA1c is high. Discuss this result and follow-up planning with a qualified clinician.",
+      "critical": "HbA1c is very high. Seek timely medical review."
+    }
+  },
+  "Vitamin D": {
+    "unit": "ng/mL",
+    "direction": "low_only",
+    "ranges": {
+      "critical_low": { "max": 10 },
+      "low": { "min": 10, "max": 19 },
+      "borderline_low": { "min": 20, "max": 29 },
+      "normal": { "min": 30, "max": 100 },
+      "high": { "min": 101, "max": 150 },
+      "critical_high": { "min": 150 }
+    },
+    "recommendations": {
+      "normal": "Vitamin D is within the expected range. Continue routine monitoring.",
+      "borderline": "Vitamin D is near the lower boundary. Review diet, sunlight exposure, and supplementation needs with a clinician.",
+      "high": "Vitamin D is outside the expected range. Discuss this result with a qualified clinician.",
+      "critical": "Vitamin D is in a critical range. Seek prompt medical review."
+    }
+  },
+  "Vitamin B12": {
+    "unit": "pg/mL",
+    "direction": "two_sided",
+    "ranges": {
+      "critical_low": { "max": 150 },
+      "low": { "min": 150, "max": 199 },
+      "borderline_low": { "min": 200, "max": 299 },
+      "normal": { "min": 300, "max": 900 },
+      "high": { "min": 901, "max": 1200 },
+      "critical_high": { "min": 1200 }
+    },
+    "recommendations": {
+      "normal": "Vitamin B12 is within the expected range. Continue routine monitoring.",
+      "borderline": "Vitamin B12 is near the lower boundary. Review dietary intake and follow-up testing with a clinician.",
+      "high": "Vitamin B12 is outside the expected range. Discuss this result with a qualified clinician.",
+      "critical": "Vitamin B12 is in a critical range. Seek prompt medical review."
+    }
+  }
+}
