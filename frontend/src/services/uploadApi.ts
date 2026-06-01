@@ -3,7 +3,7 @@ import axios from "axios";
 import type { AiSummaryResponse, AnalyzeReportResponse, GenerateAiSummaryRequest, UploadResponse } from "../types/upload";
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8010",
+  baseURL: import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8011",
   timeout: 120000,
 });
 
@@ -12,9 +12,6 @@ export async function uploadMedicalReport(file: File, onProgress: (progress: num
   formData.append("file", file);
 
   const response = await apiClient.post<UploadResponse>("/upload", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
     onUploadProgress: (event) => {
       if (!event.total) {
         return;
