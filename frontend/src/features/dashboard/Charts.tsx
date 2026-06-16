@@ -15,11 +15,31 @@ import {
 
 import type { RadarPoint, TrendPoint } from "../records/MedicalRecordsContext";
 
-export function TrendGraph({ data }: { data: TrendPoint[] }) {
+export interface TrendLineConfig {
+  dataKey: string;
+  name: string;
+  stroke: string;
+  strokeWidth?: number;
+}
+
+const defaultTrendLines: TrendLineConfig[] = [
+  { dataKey: "healthScore", name: "Health score", stroke: "#d11f3f", strokeWidth: 3 },
+  { dataKey: "abnormalMarkers", name: "Abnormal markers", stroke: "#9f1239", strokeWidth: 2 },
+];
+
+export function TrendGraph({
+  data,
+  description = "Health score and selected markers over time.",
+  lines = defaultTrendLines,
+}: {
+  data: TrendPoint[];
+  description?: string;
+  lines?: TrendLineConfig[];
+}) {
   return (
     <div className="rounded-lg border border-border bg-white p-5 shadow-sm">
       <h3 className="text-base font-semibold text-slate-950">Trend graph</h3>
-      <p className="mt-1 text-sm text-muted-foreground">Health score and selected markers over time.</p>
+      <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       <div className="mt-5 h-72">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ left: 0, right: 12, top: 8, bottom: 0 }}>
@@ -28,11 +48,18 @@ export function TrendGraph({ data }: { data: TrendPoint[] }) {
             <YAxis tickLine={false} axisLine={false} />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="healthScore" name="Health score" stroke="#d11f3f" strokeWidth={3} dot={{ r: 4 }} />
-            <Line type="monotone" dataKey="abnormalMarkers" name="Abnormal markers" stroke="#9f1239" strokeWidth={2} dot={{ r: 3 }} />
-            <Line type="monotone" dataKey="glucose" name="Glucose" stroke="#f59e0b" strokeWidth={2} dot={{ r: 3 }} />
-            <Line type="monotone" dataKey="ldl" name="LDL" stroke="#ef4444" strokeWidth={2} dot={{ r: 3 }} />
-            <Line type="monotone" dataKey="hemoglobin" name="Hemoglobin" stroke="#22c55e" strokeWidth={2} dot={{ r: 3 }} />
+            {lines.map((line) => (
+              <Line
+                key={line.dataKey}
+                type="monotone"
+                dataKey={line.dataKey}
+                name={line.name}
+                stroke={line.stroke}
+                strokeWidth={line.strokeWidth ?? 2}
+                dot={{ r: line.strokeWidth === 3 ? 4 : 3 }}
+                connectNulls
+              />
+            ))}
           </LineChart>
         </ResponsiveContainer>
       </div>
@@ -40,11 +67,11 @@ export function TrendGraph({ data }: { data: TrendPoint[] }) {
   );
 }
 
-export function HealthRadarChart({ data }: { data: RadarPoint[] }) {
+export function HealthRadarChart({ data, description = "Category-level balance from latest report." }: { data: RadarPoint[]; description?: string }) {
   return (
     <div className="rounded-lg border border-border bg-white p-5 shadow-sm">
       <h3 className="text-base font-semibold text-slate-950">Radar chart</h3>
-      <p className="mt-1 text-sm text-muted-foreground">Category-level balance from latest report.</p>
+      <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       <div className="mt-5 h-72">
         {data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">

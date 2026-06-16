@@ -1,6 +1,7 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import MedicalReportUploader from "./MedicalReportUploader";
@@ -97,11 +98,13 @@ function renderUploader() {
 
   return render(
     <AuthProvider>
-      <MedicalRecordsProvider>
-        <UploadSessionProvider>
-          <MedicalReportUploader />
-        </UploadSessionProvider>
-      </MedicalRecordsProvider>
+      <MemoryRouter>
+        <MedicalRecordsProvider>
+          <UploadSessionProvider>
+            <MedicalReportUploader />
+          </UploadSessionProvider>
+        </MedicalRecordsProvider>
+      </MemoryRouter>
     </AuthProvider>,
   );
 }
@@ -150,14 +153,16 @@ describe("MedicalReportUploader", () => {
       const [isVisible, setIsVisible] = React.useState(true);
       return (
         <AuthProvider>
-          <MedicalRecordsProvider>
-            <UploadSessionProvider>
-              <button type="button" onClick={() => setIsVisible((value) => !value)}>
-                Toggle uploader
-              </button>
-              {isVisible ? <MedicalReportUploader /> : <div>Another dashboard page</div>}
-            </UploadSessionProvider>
-          </MedicalRecordsProvider>
+          <MemoryRouter>
+            <MedicalRecordsProvider>
+              <UploadSessionProvider>
+                <button type="button" onClick={() => setIsVisible((value) => !value)}>
+                  Toggle uploader
+                </button>
+                {isVisible ? <MedicalReportUploader /> : <div>Another dashboard page</div>}
+              </UploadSessionProvider>
+            </MedicalRecordsProvider>
+          </MemoryRouter>
         </AuthProvider>
       );
     }

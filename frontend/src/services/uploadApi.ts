@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import type { AiSummaryResponse, AnalyzeReportResponse, GenerateAiSummaryRequest, UploadResponse } from "../types/upload";
+import type { AiSummaryResponse, AnalyzeReportResponse, ChatbotRequest, ChatbotResponse, GenerateAiSummaryRequest, UploadResponse } from "../types/upload";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8011",
@@ -34,6 +34,12 @@ export async function analyzeUploadedReport(fileId: string, filename: string): P
 
 export async function generateAiSummary(payload: GenerateAiSummaryRequest): Promise<AiSummaryResponse> {
   const response = await apiClient.post<AiSummaryResponse>("/generate-ai-summary", payload);
+
+  return response.data;
+}
+
+export async function askMedicalChatbot(payload: ChatbotRequest): Promise<ChatbotResponse> {
+  const response = await apiClient.post<ChatbotResponse>("/chatbot", payload);
 
   return response.data;
 }

@@ -76,13 +76,15 @@ function parameterLines(report: SavedMedicalReport): string[] {
 
 function chartLines(dashboardData: DashboardData): string[] {
   const lines: string[] = [];
+  const parameterNameByKey = new Map((dashboardData.latestReport?.parameters ?? []).map((parameter) => [toReadableTrendKey(parameter.name), parameter.name]));
 
   if (dashboardData.trends.length) {
     lines.push("Trend chart data:");
     dashboardData.trends.forEach((point) => {
-      lines.push(
-        `${point.date}: health score ${point.healthScore}, abnormal markers ${point.abnormalMarkers}, glucose ${formatNumber(point.glucose)}, LDL ${formatNumber(point.ldl)}, hemoglobin ${formatNumber(point.hemoglobin)}`,
-      );
+      const dynamicParameters = Object.entries(point)
+        .filter(([key, value]) => key.startsWith("parameter_") && typeof value === "number")
+        .map(([key, value]) => `${parameterNameByKey.get(key) ?? formatDynamicTrendLabel(key)} ${formatNumber(typeof value === "number" ? value : undefined)}`);
+      lines.push(`${point.date}: health score ${point.healthScore}, abnormal markers ${point.abnormalMarkers}${dynamicParameters.length ? `, ${dynamicParameters.join(", ")}` : ""}`);
     });
   } else {
     lines.push("Trend chart data unavailable. At least one analyzed report is required.");
@@ -236,4 +238,17 @@ function formatLabel(value: string): string {
 
 function formatNumber(value: number | undefined): string {
   return value === undefined ? "not available" : String(value);
+}
+
+function toReadableTrendKey(name: string): string {
+  return `parameter_${name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "")}`;
+}
+
+function formatDynamicTrendLabel(key: string): string {
+  return key
+    .replace(/^parameter_/, "")
+    .split("_")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }

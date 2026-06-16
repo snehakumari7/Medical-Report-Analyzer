@@ -44,9 +44,7 @@ export interface TrendPoint {
   date: string;
   healthScore: number;
   abnormalMarkers: number;
-  glucose?: number;
-  ldl?: number;
-  hemoglobin?: number;
+  [parameterKey: string]: string | number | undefined;
 }
 
 export interface RadarPoint {
@@ -140,14 +138,17 @@ function buildDashboardData(reports: SavedMedicalReport[]): DashboardData | null
   const latestReport = sortedReports[sortedReports.length - 1];
   const previousReport = sortedReports[sortedReports.length - 2];
 
-  const trends = sortedReports.map((report) => ({
-    date: formatShortDate(report.uploadedAt),
-    healthScore: report.healthScore,
-    abnormalMarkers: getAbnormalParameters(report.parameters).length,
-    glucose: findParameterValue(report.parameters, "Glucose"),
-    ldl: findParameterValue(report.parameters, "LDL"),
-    hemoglobin: findParameterValue(report.parameters, "Hemoglobin"),
-  }));
+  const trends = sortedReports.map((report) => {
+    const point: TrendPoint = {
+      date: formatShortDate(report.uploadedAt),
+      healthScore: report.healthScore,
+      abnormalMarkers: getAbnormalParameters(report.parameters).length,
+    };
+    report.parameters.forEach((parameter) => {
+      point[toParameterTrendKey(parameter.name)] = parameter.value;
+    });
+    return point;
+  });
 
   return {
     healthScore: latestReport.healthScore,
@@ -241,6 +242,10 @@ function findParameterValue(parameters: DashboardParameter[], name: string): num
 
 function formatShortDate(date: string): string {
   return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(date));
+}
+
+export function toParameterTrendKey(name: string): string {
+  return `parameter_${name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "")}`;
 }
 
 function readReports(): SavedMedicalReport[] {

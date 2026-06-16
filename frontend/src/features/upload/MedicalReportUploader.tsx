@@ -1,5 +1,6 @@
 import { ChangeEvent, DragEvent, useRef } from "react";
-import { AlertCircle, CheckCircle2, FileSearch, FileText, FileUp, Loader2, MessageSquareText, ShieldAlert, Sparkles, UploadCloud, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { AlertCircle, BarChart3, CheckCircle2, FileSearch, FileText, FileUp, Loader2, MessageSquareText, ShieldAlert, Sparkles, UploadCloud, X } from "lucide-react";
 
 import { Button } from "../../components/ui/Button";
 import { Progress } from "../../components/ui/Progress";
@@ -394,7 +395,18 @@ function AnalysisResults({
           </div>
         ) : null}
 
-        {summaryState === "success" && summary ? <AiSummaryPanel summary={summary} /> : null}
+        {summaryState === "success" && summary ? (
+          <>
+            <AiSummaryPanel summary={summary} />
+            <Link
+              to="/analytics"
+              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-slate-900 px-4 text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              <BarChart3 className="h-4 w-4" aria-hidden="true" />
+              View insights and graphs
+            </Link>
+          </>
+        ) : null}
       </section>
     </div>
   );

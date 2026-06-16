@@ -78,3 +78,26 @@ export interface AiSummaryResponse {
   questions_to_ask_doctor: string[];
   disclaimer: string;
 }
+
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface ChatbotContext {
+  health_score?: number | null;
+  extracted_parameters: AiSummaryParameter[];
+  abnormal_values: AiSummaryParameter[];
+  report_filename?: string | null;
+}
+
+export interface ChatbotRequest {
+  question: string;
+  context: ChatbotContext;
+  conversation: ChatMessage[];
+}
+
+export interface ChatbotResponse {
+  answer: string;
+  safety_note: string;
+}

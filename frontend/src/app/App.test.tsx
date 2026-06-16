@@ -61,11 +61,12 @@ describe("App authenticated workflow", () => {
     expect(screen.getAllByRole("button", { name: /login/i }).length).toBeGreaterThan(0);
   });
 
-  it("sends a new signed-in user to the report upload workflow with no demo dashboard data", () => {
+  it("sends a new signed-in user to an empty dashboard with an upload CTA", () => {
     seedSignedInUser();
     renderApp();
 
-    expect(screen.getByRole("heading", { name: /upload, extract, analyze, and summarize/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /get to know your medical insights from your first report/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /upload report/i })).toBeInTheDocument();
     expect(screen.queryByText("annual-health-panel.pdf")).not.toBeInTheDocument();
   });
 
