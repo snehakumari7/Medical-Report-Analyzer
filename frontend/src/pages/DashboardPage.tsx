@@ -7,6 +7,7 @@ import { HealthRadarChart, TrendGraph } from "../features/dashboard/Charts";
 import { EmptyState } from "../features/dashboard/DashboardStates";
 import { HealthScoreGauge } from "../features/dashboard/HealthScoreGauge";
 import { getAbnormalParameters, useMedicalRecords } from "../features/records/MedicalRecordsContext";
+import { DownloadPdfReportButton } from "../features/reports/DownloadPdfReportButton";
 
 export default function DashboardPage() {
   const { dashboardData } = useMedicalRecords();
@@ -25,6 +26,7 @@ export default function DashboardPage() {
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">A focused view of report quality, abnormal values, and health trends across recent uploads.</p>
           <p className="mt-2 text-sm font-medium text-slate-700">Latest report: {dashboardData.latestReport?.filename}</p>
         </div>
+        <DownloadPdfReportButton dashboardData={dashboardData} report={dashboardData.latestReport} />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

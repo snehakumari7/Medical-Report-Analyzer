@@ -1,32 +1,41 @@
-import { ChangeEvent, DragEvent, useRef, useState } from "react";
+import { ChangeEvent, DragEvent, useRef } from "react";
 import { AlertCircle, CheckCircle2, FileSearch, FileText, FileUp, Loader2, MessageSquareText, ShieldAlert, Sparkles, UploadCloud, X } from "lucide-react";
 
 import { Button } from "../../components/ui/Button";
 import { Progress } from "../../components/ui/Progress";
 import { useMedicalRecords } from "../records/MedicalRecordsContext";
+import { useUploadSession } from "./UploadSessionContext";
 import { analyzeUploadedReport, generateAiSummary, uploadMedicalReport } from "../../services/uploadApi";
-import type { AiSummaryParameter, AiSummaryResponse, AnalyzeReportResponse, UploadResponse } from "../../types/upload";
+import type { AiSummaryParameter, AiSummaryResponse, AnalyzeReportResponse } from "../../types/upload";
 
 const MAX_FILE_SIZE_BYTES = 20 * 1024 * 1024;
 const SUPPORTED_MIME_TYPES = ["application/pdf", "image/png", "image/jpeg"];
 const SUPPORTED_EXTENSIONS = [".pdf", ".png", ".jpg", ".jpeg"];
 
-type UploadState = "idle" | "validating" | "uploading" | "success" | "error";
-type AnalysisState = "idle" | "analyzing" | "success" | "error";
-type AiSummaryState = "idle" | "generating" | "success" | "error";
-
 export default function MedicalReportUploader() {
   const { saveAnalyzedReport, saveAiSummary } = useMedicalRecords();
+  const {
+    selectedFile,
+    setSelectedFile,
+    uploadState,
+    setUploadState,
+    progress,
+    setProgress,
+    errorMessage,
+    setErrorMessage,
+    uploadResult,
+    setUploadResult,
+    analysisState,
+    setAnalysisState,
+    analysisError,
+    setAnalysisError,
+    analysisResult,
+    setAnalysisResult,
+    savedReportId,
+    setSavedReportId,
+    resetSession,
+  } = useUploadSession();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [uploadState, setUploadState] = useState<UploadState>("idle");
-  const [progress, setProgress] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [uploadResult, setUploadResult] = useState<UploadResponse | null>(null);
-  const [analysisState, setAnalysisState] = useState<AnalysisState>("idle");
-  const [analysisError, setAnalysisError] = useState("");
-  const [analysisResult, setAnalysisResult] = useState<AnalyzeReportResponse | null>(null);
-  const [savedReportId, setSavedReportId] = useState("");
   const isBusy = uploadState === "validating" || uploadState === "uploading";
   const isAnalyzing = analysisState === "analyzing";
 
@@ -109,15 +118,7 @@ export default function MedicalReportUploader() {
   };
 
   const resetUpload = () => {
-    setSelectedFile(null);
-    setUploadState("idle");
-    setProgress(0);
-    setErrorMessage("");
-    setUploadResult(null);
-    setAnalysisState("idle");
-    setAnalysisError("");
-    setAnalysisResult(null);
-    setSavedReportId("");
+    resetSession();
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -250,9 +251,7 @@ function AnalysisResults({
   savedReportId: string;
   onSummarySaved: (reportId: string, summary: AiSummaryResponse) => void;
 }) {
-  const [summaryState, setSummaryState] = useState<AiSummaryState>("idle");
-  const [summaryError, setSummaryError] = useState("");
-  const [summary, setSummary] = useState<AiSummaryResponse | null>(null);
+  const { summaryState, setSummaryState, summaryError, setSummaryError, summary, setSummary } = useUploadSession();
   const foundCount = result.extracted_parameters.length;
   const missingCount = result.extraction_logs.filter((log) => log.status === "not_found").length;
   const isGeneratingSummary = summaryState === "generating";

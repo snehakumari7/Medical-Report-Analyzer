@@ -77,6 +77,7 @@ describe("App authenticated workflow", () => {
 
     expect(screen.getByRole("heading", { name: /clinical overview/i })).toBeInTheDocument();
     expect(screen.getByText(/blood-report\.pdf/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /download pdf report/i })).toBeInTheDocument();
     expect(screen.getAllByText("LDL").length).toBeGreaterThan(0);
 
     await user.click(screen.getByRole("link", { name: /analytics/i }));

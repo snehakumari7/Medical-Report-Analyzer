@@ -1,3 +1,4 @@
+import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -5,6 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import MedicalReportUploader from "./MedicalReportUploader";
 import { AuthProvider } from "../auth/AuthContext";
 import { MedicalRecordsProvider } from "../records/MedicalRecordsContext";
+import { UploadSessionProvider } from "./UploadSessionContext";
 
 vi.mock("../../services/uploadApi", () => ({
   generateAiSummary: vi.fn(async () => ({
@@ -96,7 +98,9 @@ function renderUploader() {
   return render(
     <AuthProvider>
       <MedicalRecordsProvider>
-        <MedicalReportUploader />
+        <UploadSessionProvider>
+          <MedicalReportUploader />
+        </UploadSessionProvider>
       </MedicalRecordsProvider>
     </AuthProvider>,
   );
@@ -132,6 +136,46 @@ describe("MedicalReportUploader", () => {
     expect(screen.getByText("Glucose")).toBeInTheDocument();
     expect(screen.getByText("LDL")).toBeInTheDocument();
     expect(screen.getByText(/does not diagnose diseases/i)).toBeInTheDocument();
+  });
+
+  it("keeps extracted report information after the uploader remounts", async () => {
+    const user = userEvent.setup();
+    localStorage.setItem(
+      "medical-analyzer-users",
+      JSON.stringify([{ id: "user-1", name: "Test User", email: "test@example.com", passwordHash: "hash", createdAt: new Date().toISOString() }]),
+    );
+    localStorage.setItem("medical-analyzer-session", "user-1");
+
+    function ToggleHarness() {
+      const [isVisible, setIsVisible] = React.useState(true);
+      return (
+        <AuthProvider>
+          <MedicalRecordsProvider>
+            <UploadSessionProvider>
+              <button type="button" onClick={() => setIsVisible((value) => !value)}>
+                Toggle uploader
+              </button>
+              {isVisible ? <MedicalReportUploader /> : <div>Another dashboard page</div>}
+            </UploadSessionProvider>
+          </MedicalRecordsProvider>
+        </AuthProvider>
+      );
+    }
+
+    render(<ToggleHarness />);
+
+    const file = new File(["valid image"], "report.png", { type: "image/png" });
+    await user.upload(screen.getByLabelText(/drop your report here or browse/i), file);
+    await user.click(screen.getByRole("button", { name: /upload report/i }));
+    await user.click(await screen.findByRole("button", { name: /extract and analyze report/i }));
+    expect(await screen.findByText("83/100")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /toggle uploader/i }));
+    expect(screen.getByText("Another dashboard page")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /toggle uploader/i }));
+    expect(await screen.findByText("83/100")).toBeInTheDocument();
+    expect(screen.getByText("Upload complete")).toBeInTheDocument();
   });
 
   it("generates and displays an AI summary after analysis", async () => {

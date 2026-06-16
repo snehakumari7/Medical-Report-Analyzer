@@ -10,6 +10,7 @@ import UploadPage from "../pages/UploadPage";
 import { cn } from "../lib/utils";
 import { useAuth } from "../features/auth/AuthContext";
 import { MedicalRecordsProvider, useMedicalRecords } from "../features/records/MedicalRecordsContext";
+import { UploadSessionProvider } from "../features/upload/UploadSessionContext";
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -27,7 +28,8 @@ export default function App() {
 
   return (
     <MedicalRecordsProvider>
-      <div className="min-h-screen bg-background text-foreground">
+      <UploadSessionProvider>
+        <div className="min-h-screen bg-background text-foreground">
         <header className="border-b border-rose-100 bg-white/95 shadow-sm backdrop-blur">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
             <div className="grid gap-4 xl:grid-cols-[auto_1fr_auto] xl:items-center">
@@ -89,7 +91,8 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
-      </div>
+        </div>
+      </UploadSessionProvider>
     </MedicalRecordsProvider>
   );
 }
