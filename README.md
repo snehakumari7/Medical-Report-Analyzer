@@ -1,4 +1,4 @@
-# AI-Powered Visual Medical Report Analyzer
+# MedDecode AI
 
 A full-stack healthcare SaaS-style application for uploading medical reports, extracting values with OCR, classifying abnormal parameters, generating AI summaries, and visualizing health trends over time.
 
