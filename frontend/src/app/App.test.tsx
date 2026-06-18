@@ -65,7 +65,7 @@ describe("App authenticated workflow", () => {
     seedSignedInUser();
     renderApp();
 
-    expect(screen.getByRole("heading", { name: /get to know your medical insights from your first report/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /transform medical reports into actionable health insights/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /upload report/i })).toBeInTheDocument();
     expect(screen.queryByText("annual-health-panel.pdf")).not.toBeInTheDocument();
   });

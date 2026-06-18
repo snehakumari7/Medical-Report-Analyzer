@@ -41,24 +41,26 @@ export default function AuthPage() {
       <div className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <section className="space-y-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <div className="brand-mark flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
               <Activity className="h-6 w-6" aria-hidden="true" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-muted-foreground">Medical Report Analyzer</p>
-              <h1 className="text-xl font-semibold tracking-normal">Personal health workspace</h1>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">AI report analyzer</p>
+              <h1 className="text-2xl font-black tracking-normal">
+                Med<span className="text-primary">Decode</span> <span className="rounded-md bg-primary px-1.5 py-0.5 text-xs font-black text-white">AI</span>
+              </h1>
             </div>
           </div>
           <div>
-            <p className="text-sm font-semibold uppercase text-primary">Secure workflow</p>
-            <h2 className="mt-2 max-w-xl text-4xl font-semibold tracking-normal">Sign in, upload, analyze, then track real trends.</h2>
+            <p className="inline-flex rounded-full bg-rose-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary">Secure workflow</p>
+            <h2 className="mt-3 max-w-xl text-4xl font-black tracking-normal">Sign in, upload, analyze, then track real trends.</h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">
               New accounts start empty. Dashboards, charts, history, and AI summaries appear only after reports are uploaded and extracted.
             </p>
           </div>
         </section>
 
-        <section className="rounded-lg border border-rose-200 bg-white p-6 shadow-sm">
+        <section className="med-card rounded-lg p-6">
           <div className="mb-6 grid grid-cols-2 rounded-md bg-rose-50 p-1">
             <button
               type="button"

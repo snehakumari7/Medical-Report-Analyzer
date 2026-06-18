@@ -126,7 +126,7 @@ export default function MedicalReportUploader() {
   };
 
   return (
-    <div className="rounded-lg border border-border bg-white p-5 shadow-sm">
+    <div className="med-card rounded-lg p-5">
       <div className="mb-5 flex items-center justify-between gap-4">
         <div>
           <h3 className="text-lg font-semibold tracking-normal text-slate-950">Report file</h3>
@@ -142,7 +142,7 @@ export default function MedicalReportUploader() {
       <label
         onDragOver={(event) => event.preventDefault()}
         onDrop={handleDrop}
-        className="flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-rose-200 bg-rose-50 px-6 py-8 text-center transition hover:border-primary hover:bg-rose-100"
+        className="flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-rose-200 bg-gradient-to-br from-rose-50 via-white to-red-50 px-6 py-8 text-center transition hover:border-primary hover:shadow-inner"
       >
         <input
           ref={fileInputRef}
@@ -152,7 +152,9 @@ export default function MedicalReportUploader() {
           onChange={handleInputChange}
           disabled={isBusy}
         />
-        <UploadCloud className="mb-4 h-10 w-10 text-primary" aria-hidden="true" />
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-rose-200">
+          <UploadCloud className="h-7 w-7" aria-hidden="true" />
+        </div>
         <span className="text-base font-semibold text-slate-950">Drop your report here or browse</span>
         <span className="mt-2 text-sm text-muted-foreground">Client checks run before upload. Server validation runs again.</span>
       </label>

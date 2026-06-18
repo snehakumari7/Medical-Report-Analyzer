@@ -21,12 +21,12 @@ export default function DashboardPage() {
   if (!dashboardData) {
     return (
       <div className="space-y-6">
-        <section className="overflow-hidden rounded-lg border border-rose-100 bg-white shadow-sm">
+        <section className="med-card overflow-hidden rounded-lg">
           <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="p-8 sm:p-10">
-              <p className="text-sm font-semibold uppercase text-primary">Welcome to MediScan</p>
+              <p className="inline-flex rounded-full bg-rose-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary">AI powered medical report analyzer</p>
               <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-normal text-slate-950 sm:text-4xl">
-                Get to know your medical insights from your first report.
+                Transform medical reports into actionable health insights.
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
                 Your dashboard is empty because no report has been analyzed yet. Upload a blood report to unlock health score, abnormal markers, AI suggestions, charts, and history.
@@ -39,12 +39,27 @@ export default function DashboardPage() {
                 Upload report
               </Link>
             </div>
-            <div className="flex min-h-72 items-center justify-center bg-rose-50 p-8">
-              <div className="relative h-44 w-44">
-                <div className="absolute inset-0 rounded-full bg-rose-200/70" />
-                <div className="absolute inset-8 rounded-full bg-white shadow-sm" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Activity className="h-16 w-16 text-primary" aria-hidden="true" />
+            <div className="flex min-h-72 items-center justify-center bg-gradient-to-br from-rose-50 via-white to-red-50 p-8">
+              <div className="w-full max-w-md rounded-lg border border-rose-100 bg-white p-6 shadow-xl shadow-rose-100/80">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-white">
+                    <Activity className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <p className="text-base font-semibold text-slate-950">Your Health Summary</p>
+                    <p className="text-sm text-muted-foreground">Unlocks after first upload</p>
+                  </div>
+                </div>
+                <div className="mt-6 grid gap-3">
+                  {["Health score", "Abnormal markers", "AI summary", "Trend insights"].map((item) => (
+                    <div key={item} className="flex items-center justify-between rounded-md border border-rose-100 bg-rose-50/70 px-4 py-3 text-sm">
+                      <span className="font-semibold text-slate-800">{item}</span>
+                      <span className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Pending</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 h-20 overflow-hidden rounded-md bg-rose-50">
+                  <div className="h-full w-full bg-[linear-gradient(90deg,transparent_0_5%,rgba(220,38,38,.45)_5%_6%,transparent_6%_18%,rgba(220,38,38,.25)_18%_19%,transparent_19%_31%,rgba(220,38,38,.45)_31%_32%,transparent_32%_100%)]" />
                 </div>
               </div>
             </div>
@@ -129,7 +144,7 @@ export default function DashboardPage() {
 
 function OverviewMetric({ icon: Icon, label, value }: { icon: typeof Activity; label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-border bg-white p-4 shadow-sm">
+    <div className="med-card rounded-lg p-4">
       <div className="flex items-center justify-between">
         <p className="text-sm font-medium text-muted-foreground">{label}</p>
         <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
